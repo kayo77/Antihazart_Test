@@ -11,7 +11,7 @@ PASS="SMTP_password"
 SRV="ip.ad.dr.es" #ip addres of DNS server
 curl -k --silent -H "Accept: application/xml" -H "Content-Type: application/xml" -X GET https://hazard.mf.gov.pl/api/Register | \
      grep "AdresDomeny" | awk -F "<AdresDomeny>" '{print $2}' | \
-     idn2 | awk -F "</adresdomeny>" '{print  $1 }'| uniq > hazard.zones
+     idn2 | awk -F "</adresdomeny>" '{print  $1 }' > hazard.zones
      
 dig @$SRV +noall +answer -t A -f hazard.zones | awk '{print $1,$NF}' | grep -v '\.$' | grep -v 145.237.235.240 > results
 rm -f hazard.zones
